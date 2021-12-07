@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Online</title>
+</head>
+<body>
+    <h1>Welcome to my chat!</h1>
+
+    <textarea placeholder="Write yor message here" name="message" id="message" cols="30" rows="10"></textarea><br><br>
+
+    <button type="button" class="emit-btn">Send</button><br><br>
+
+    <div class="messages-holder"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/socket.io/socker.io.js"></script>
+
+    <script>
+        //evento on clic
+        //decirle que vamos abrir un canal para hablar
+        const socket = io.connect();
+       
+        //jquaryti permite recopilar el texto con el nick value
+        $('.emit-btn').on('click',()=>{
+            let text =$('#message').val().trim();
+//se le puede poner el nombre que quieres en input
+            socket.emit('input',text);
+            $('#message').val('');
+        });
+
+
+
+socket.on('new',message =>{
+    $('.messages-holder').append(`${message} <br>`);
+
+
+
+});
+
+    </script>
+</body>
+</html>
